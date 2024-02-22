@@ -6,6 +6,7 @@ from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 import seaborn as sns
+from sklearn.metrics import mean_absolute_error
 
 
 def train():
@@ -64,11 +65,19 @@ def train():
     model = LinearRegression()
     model.fit(X_train, y_train)
 
-    # Evaluate the model
+    #Evaluate the model
     train_score = r2_score(y_train, model.predict(X_train))
     test_score = r2_score(y_test, model.predict(X_test))
     print(f"Train R² score: {train_score}")
     print(f"Test R² score: {test_score}")
+
+    y_pred = model.predict(X_test)
+    mae = mean_absolute_error(y_test, y_pred)
+    mae
+    df = pd.DataFrame(data = {"actual values": y_test, "predicted values" : y_pred})
+    df["difference"] = df["predicted values"] - df["actual values"]
+    df.to_csv('data/mae.csv', index=False)
+
 
     # Save the model
     artifacts = {
