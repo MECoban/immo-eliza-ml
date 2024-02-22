@@ -5,6 +5,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
+import seaborn as sns
 
 
 def train():
@@ -13,10 +14,11 @@ def train():
     data = pd.read_csv("data/properties.csv")
 
     # Define features to use
-    num_features = ["nbr_frontages"]
-    fl_features = ["fl_terrace"]
-    cat_features = ["equipped_kitchen"]
+    num_features = ["nbr_frontages", "latitude", "longitude", "total_area_sqm", "surface_land_sqm", "nbr_bedrooms"]
+    fl_features = ["fl_terrace","fl_furnished", "fl_open_fire", "fl_garden", "fl_swimming_pool"]
+    cat_features = ["equipped_kitchen","zip_code", "region", "property_type", "province", "locality", "epc", "heating_type", "equipped_kitchen", "state_building"] #Categorical features
 
+    
     # Split the data into features and target
     X = data[num_features + fl_features + cat_features]
     y = data["price"]
@@ -27,13 +29,14 @@ def train():
     )
 
     # Impute missing values using SimpleImputer
-    imputer = SimpleImputer(strategy="mean")
-    imputer.fit(X_train[num_features])
-    X_train[num_features] = imputer.transform(X_train[num_features])
+    imputer = SimpleImputer(strategy="constant") # missing values = mean, median, most_frequent or constant
+    imputer.fit(X_train[num_features]) # Fit the imputer to the data
+    
+    X_train[num_features] = imputer.transform(X_train[num_features]) # Transform the data by replacing NaN values with the imputed values
     X_test[num_features] = imputer.transform(X_test[num_features])
 
     # Convert categorical columns with one-hot encoding using OneHotEncoder
-    enc = OneHotEncoder()
+    enc = OneHotEncoder(handle_unknown="ignore")
     enc.fit(X_train[cat_features])
     X_train_cat = enc.transform(X_train[cat_features]).toarray()
     X_test_cat = enc.transform(X_test[cat_features]).toarray()
@@ -79,6 +82,8 @@ def train():
         "model": model,
     }
     joblib.dump(artifacts, "models/artifacts.joblib")
+
+
 
 
 if __name__ == "__main__":
