@@ -1,9 +1,8 @@
 import click
 import joblib
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
+
+
 
 @click.command()
 @click.option("-i", "--input-dataset", help="path to input .csv dataset", required=True)

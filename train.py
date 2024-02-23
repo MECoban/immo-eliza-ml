@@ -15,9 +15,9 @@ def train():
     data = pd.read_csv("data/properties.csv")
 
     # Define features to use
-    num_features = ["nbr_frontages", "latitude", "longitude", "total_area_sqm", "surface_land_sqm", "nbr_bedrooms"]
-    fl_features = ["fl_terrace","fl_furnished", "fl_open_fire", "fl_garden", "fl_swimming_pool"]
-    cat_features = ["equipped_kitchen","zip_code", "region", "property_type", "province", "locality", "epc", "heating_type", "equipped_kitchen", "state_building"] #Categorical features
+    num_features = ["latitude", "longitude", "total_area_sqm", "surface_land_sqm", "nbr_frontages","construction_year"]
+    fl_features = ["fl_terrace","fl_furnished", "fl_garden", "fl_swimming_pool"]
+    cat_features = ["equipped_kitchen","zip_code", "region", "property_type", "province", "locality", "epc", "heating_type", "equipped_kitchen", "state_building", "nbr_bedrooms"] #Categorical features
 
     
     # Split the data into features and target
@@ -30,7 +30,7 @@ def train():
     )
 
     # Impute missing values using SimpleImputer
-    imputer = SimpleImputer(strategy="constant") # missing values = mean, median, most_frequent or constant
+    imputer = SimpleImputer(strategy="mean") # missing values = mean, median, most_frequent or constant
     imputer.fit(X_train[num_features]) # Fit the imputer to the data
     
     X_train[num_features] = imputer.transform(X_train[num_features]) # Transform the data by replacing NaN values with the imputed values
@@ -73,9 +73,8 @@ def train():
 
     y_pred = model.predict(X_test)
     mae = mean_absolute_error(y_test, y_pred)
-    mae
-    df = pd.DataFrame(data = {"actual values": y_test, "predicted values" : y_pred})
-    df["difference"] = df["predicted values"] - df["actual values"]
+    df = pd.DataFrame(data = {"actual_values": y_test, "predicted_values" : y_pred})
+    df["difference"] = df["predicted_values"] - df["actual_values"]
     df.to_csv('data/mae.csv', index=False)
 
 

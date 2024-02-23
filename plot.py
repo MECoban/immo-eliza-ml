@@ -1,9 +1,4 @@
 import pandas as pd
-from sklearn.impute import SimpleImputer
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OneHotEncoder
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import mean_absolute_error
@@ -25,10 +20,14 @@ data2 = pd.read_csv("data/mae.csv")
 n_data2 = data2["actual_values"]
 n_data3 = data2["predicted_values"]
 n_data4 = data2["difference"]
+
+sns.scatterplot(x=n_data2, y=len(n_data2), alpha=0.5)
+plt.show()
+
 sns.scatterplot(x=n_data2, y=n_data3, alpha=0.5)
 plt.show()
 
-sns.pointplot(x=n_data4, y=len(n_data3), alpha=0.5)
+sns.scatterplot(x=n_data4, y=len(n_data3), alpha=0.5)
 plt.show()
 
 
