@@ -55,7 +55,7 @@ def train():
     print(f"Features: \n {X_train.columns.tolist()}")
 
     # Train the model using Random Forest
-    model = RandomForestRegressor(n_estimators=200, random_state=505)
+    model = RandomForestRegressor(n_estimators=10, random_state=505)
     model.fit(X_train_2, y_train)
 
     # Evaluate the model
@@ -80,7 +80,7 @@ def train():
         "enc": enc,
         "model": model,
     }
-    joblib.dump(artifacts, "models/artifacts.joblib", compress=5)
+    joblib.dump(artifacts, "models/artifacts.joblib", compress=3)
 
 if __name__ == "__main__":
     train()
