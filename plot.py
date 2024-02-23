@@ -6,10 +6,10 @@ from sklearn.metrics import mean_absolute_error
 data = pd.read_csv("data/properties.csv")
 n_data = data["price"]
 
-pre = pd.read_csv("output/predictions.csv")
+pre = pd.read_csv("output/predictions_linear.csv")
 
 assert len(data) == len(pre)
-sns.scatterplot(x=data["price"], y=pre["predictions"], alpha=0.5)
+sns.scatterplot(x=data["price"], y=pre["predictions_linear"], alpha=0.5)
 plt.title("Actual vs. Predicted Prices with LinearRegression")
 plt.xlabel("Actual Price")
 plt.ylabel("Predicted Price")
@@ -30,9 +30,9 @@ plt.show()
 sns.scatterplot(x=n_data4, y=len(n_data3), alpha=0.5)
 plt.show()"""
 
-pre2 = pd.read_csv("output/predictions_forest.csv")
+pre2 = pd.read_csv("output/predictions.csv")
 assert len(data) == len(pre2)
-sns.scatterplot(x=data["price"], y=pre2["predictions_forest"], alpha=0.5)
+sns.scatterplot(x=data["price"], y=pre2["predictions"], alpha=0.5)
 plt.title("Actual vs. Predicted Prices with forest")
 plt.xlabel("Actual Price")
 plt.ylabel("Predicted Price")
