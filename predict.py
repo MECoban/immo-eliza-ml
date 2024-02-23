@@ -3,7 +3,6 @@ import joblib
 import pandas as pd
 
 
-
 @click.command()
 @click.option("-i", "--input-dataset", help="path to input .csv dataset", required=True)
 @click.option(
