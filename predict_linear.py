@@ -19,17 +19,18 @@ def predict(input_dataset, output_dataset):
     data = pd.read_csv(input_dataset)
     ### -------------------------------------------------- ###
     # Load the model artifacts using joblib
-    artifacts = joblib.load("models/artifacts.joblib")
+    artifacts = joblib.load("models/artifacts_linear.joblib")
 
     # Unpack the artifacts
     num_features = artifacts["features"]["num_features"]
+    fl_features = artifacts["features"]["fl_features"]
     cat_features = artifacts["features"]["cat_features"]
     imputer = artifacts["imputer"]
     enc = artifacts["enc"]
     model = artifacts["model"]
 
     # Extract the used data
-    data = data[num_features + cat_features]
+    data = data[num_features + fl_features + cat_features]
 
     # Apply imputer and encoder on data
     data[num_features] = imputer.transform(data[num_features])
@@ -38,7 +39,7 @@ def predict(input_dataset, output_dataset):
     # Combine the numerical and one-hot encoded categorical columns
     data = pd.concat(
         [
-            data[num_features].reset_index(drop=True),
+            data[num_features + fl_features].reset_index(drop=True),
             pd.DataFrame(data_cat, columns=enc.get_feature_names_out()),
         ],
         axis=1,
@@ -50,7 +51,7 @@ def predict(input_dataset, output_dataset):
 
     ### -------- DO NOT TOUCH THE FOLLOWING LINES -------- ###
     # Save the predictions to a CSV file (in order of data input!)
-    pd.DataFrame({"predictions": predictions}).to_csv(output_dataset, index=False)
+    pd.DataFrame({"predictions_linear": predictions}).to_csv(output_dataset, index=False)
 
     # Print success messages
     click.echo(click.style("Predictions generated successfully!", fg="green"))

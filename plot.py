@@ -37,4 +37,3 @@ plt.title("Actual vs. Predicted Prices with forest")
 plt.xlabel("Actual Price")
 plt.ylabel("Predicted Price")
 plt.show()
-

@@ -17,9 +17,9 @@ def train():
     # Define features to use
     num_features = ["latitude", "longitude", "total_area_sqm", "surface_land_sqm", "nbr_frontages","construction_year"]
     fl_features = ["fl_terrace","fl_furnished", "fl_garden", "fl_swimming_pool"]
-    cat_features = ["equipped_kitchen","zip_code", "region", "property_type", "province", "locality", "epc", "heating_type", "equipped_kitchen", "state_building", "nbr_bedrooms"] #Categorical features
+    cat_features = ["zip_code", "region", "property_type", "province", "locality", "epc", "heating_type", "equipped_kitchen", "state_building", "nbr_bedrooms"] #Categorical features
 
-    
+
     # Split the data into features and target
     X = data[num_features + fl_features + cat_features]
     y = data["price"]
@@ -32,7 +32,6 @@ def train():
     # Impute missing values using SimpleImputer
     imputer = SimpleImputer(strategy="mean") # missing values = mean, median, most_frequent or constant
     imputer.fit(X_train[num_features]) # Fit the imputer to the data
-    
     X_train[num_features] = imputer.transform(X_train[num_features]) # Transform the data by replacing NaN values with the imputed values
     X_test[num_features] = imputer.transform(X_test[num_features])
 
@@ -75,7 +74,7 @@ def train():
     mae = mean_absolute_error(y_test, y_pred)
     df = pd.DataFrame(data = {"actual_values": y_test, "predicted_values" : y_pred})
     df["difference"] = df["predicted_values"] - df["actual_values"]
-    df.to_csv('data/mae.csv', index=False)
+    df.to_csv('data/mae_linear.csv', index=False)
 
 
     # Save the model
@@ -89,7 +88,7 @@ def train():
         "enc": enc,
         "model": model,
     }
-    joblib.dump(artifacts, "models/artifacts.joblib")
+    joblib.dump(artifacts, "models/artifacts_linear.joblib" , compress=3)
 
 
 
