@@ -10,13 +10,13 @@ pre = pd.read_csv("output/predictions.csv")
 
 assert len(data) == len(pre)
 sns.scatterplot(x=data["price"], y=pre["predictions"], alpha=0.5)
-plt.title("Actual vs. Predicted Prices")
+plt.title("Actual vs. Predicted Prices with LinearRegression")
 plt.xlabel("Actual Price")
 plt.ylabel("Predicted Price")
 plt.show()
 
 
-data2 = pd.read_csv("data/mae.csv")
+"""data2 = pd.read_csv("data/mae.csv")
 n_data2 = data2["actual_values"]
 n_data3 = data2["predicted_values"]
 n_data4 = data2["difference"]
@@ -28,7 +28,13 @@ sns.scatterplot(x=n_data2, y=n_data3, alpha=0.5)
 plt.show()
 
 sns.scatterplot(x=n_data4, y=len(n_data3), alpha=0.5)
+plt.show()"""
+
+pre2 = pd.read_csv("output/predictions_forest.csv")
+assert len(data) == len(pre2)
+sns.scatterplot(x=data["price"], y=pre2["predictions_forest"], alpha=0.5)
+plt.title("Actual vs. Predicted Prices with forest")
+plt.xlabel("Actual Price")
+plt.ylabel("Predicted Price")
 plt.show()
-
-
 
