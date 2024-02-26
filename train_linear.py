@@ -72,6 +72,7 @@ def train():
 
     y_pred = model.predict(X_test)
     mae = mean_absolute_error(y_test, y_pred)
+    print(mae)
     df = pd.DataFrame(data = {"actual_values": y_test, "predicted_values" : y_pred})
     df["difference"] = df["predicted_values"] - df["actual_values"]
     df.to_csv('data/mae_linear.csv', index=False)

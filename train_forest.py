@@ -11,6 +11,10 @@ def train():
     # Load the data
     data = pd.read_csv("data/properties.csv")
 
+    data = data[data["nbr_bedrooms"] <= 40]
+    data = data[data["total_area_sqm"] <= 10000]
+    data = data[data["garden_sqm"] <= 10000]
+
     num_features = ["total_area_sqm", "surface_land_sqm", "latitude", "longitude", "nbr_frontages", "construction_year"]
     cat_features = ["zip_code", "property_type", "locality", "epc", "nbr_bedrooms", "heating_type", "equipped_kitchen"] #Categorical features
 
@@ -37,14 +41,14 @@ def train():
     X_test_cat = enc.transform(X_test[cat_features]).toarray()
 
     # Combine the numerical and one-hot encoded categorical columns
-    X_train_2 = pd.concat(
+    X_train = pd.concat(
         [
             pd.DataFrame(X_train[num_features], index=X_train.index),
             pd.DataFrame(X_train_cat, index=X_train.index, columns=enc.get_feature_names_out()),
         ],
         axis=1,
     )
-    X_test_2 = pd.concat(
+    X_test = pd.concat(
         [
             pd.DataFrame(X_test[num_features], index=X_test.index),
             pd.DataFrame(X_test_cat, index=X_test.index, columns=enc.get_feature_names_out()),
@@ -56,16 +60,17 @@ def train():
 
     # Train the model using Random Forest
     model = RandomForestRegressor(n_estimators=10, random_state=505)
-    model.fit(X_train_2, y_train)
+    model.fit(X_train, y_train)
 
     # Evaluate the model
-    train_score = r2_score(y_train, model.predict(X_train_2))
-    test_score = r2_score(y_test, model.predict(X_test_2))
+    train_score = r2_score(y_train, model.predict(X_train))
+    test_score = r2_score(y_test, model.predict(X_test))
     print(f"Train R² score: {train_score}")
     print(f"Test R² score: {test_score}")
 
-    y_pred = model.predict(X_test_2)
+    y_pred = model.predict(X_test)
     mae = mean_absolute_error(y_test, y_pred)
+    print(mae)
     df = pd.DataFrame(data = {"actual_values": y_test, "predicted_values" : y_pred})
     df["difference"] = df["predicted_values"] - df["actual_values"]
     df.to_csv('data/mae_forest.csv', index=False)
