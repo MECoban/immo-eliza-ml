@@ -31,7 +31,7 @@ def train():
     X_test[num_features] = imputer.transform(X_test[num_features])
 
     # Convert categorical column 'zip_code' with one-hot encoding using OneHotEncoder
-    enc = OneHotEncoder(handle_unknown='ignore')
+    enc = OneHotEncoder(handle_unknown="ignore")
     enc.fit(X_train[cat_features])
     X_train_cat = enc.transform(X_train[cat_features]).toarray()
     X_test_cat = enc.transform(X_test[cat_features]).toarray()
@@ -80,7 +80,7 @@ def train():
         "enc": enc,
         "model": model,
     }
-    joblib.dump(artifacts, "models/artifacts.joblib", compress=3)
+    joblib.dump(artifacts, "models/artifacts_forest.joblib", compress=3)
 
 if __name__ == "__main__":
     train()
