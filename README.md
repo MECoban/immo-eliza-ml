@@ -72,17 +72,17 @@ python predict_xgbr.py -i "data/properties.csv" -o "output/predictions_xgbr.csv"
 
 ## Visualization
 
-* Actual Price - Predicted Price with model :
+* Actual Price - Predicted Price with model Linear Regression:
 
 <img width="636" alt="Screenshot 2024-02-26 at 01 41 45" src="https://github.com/theomarcode/immo-eliza-ml/assets/156511598/6d611a95-a6ca-4b07-b142-db083da67652">
 
-* Actual Price - Predicted Price with model :
+* Actual Price - Predicted Price with model Random Forest:
   
-<img width="642" alt="Screenshot 2024-02-26 at 01 42 18" src="https://github.com/theomarcode/immo-eliza-ml/assets/156511598/cd381f4a-817b-47ba-ac69-80e6aaf17e45">
-
-* Actual Price - Predicted Price with model :
-
 <img width="638" alt="Screenshot 2024-02-26 at 01 42 03" src="https://github.com/theomarcode/immo-eliza-ml/assets/156511598/c0807e17-8f89-4ccb-bf66-a1e0d3d25bf6">
+
+* Actual Price - Predicted Price with model XGBoost:
+
+<img width="642" alt="Screenshot 2024-02-26 at 01 42 18" src="https://github.com/theomarcode/immo-eliza-ml/assets/156511598/cd381f4a-817b-47ba-ac69-80e6aaf17e45">
 
 
 
